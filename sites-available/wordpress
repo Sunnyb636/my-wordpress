@@ -1,0 +1,18 @@
+server {
+    listen 80;
+    server_name 16.16.115.205;
+    root /var/www/html;
+
+    location / {
+        autoindex off;
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+}
